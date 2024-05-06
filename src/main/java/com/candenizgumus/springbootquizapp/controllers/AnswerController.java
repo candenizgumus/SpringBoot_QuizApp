@@ -18,6 +18,11 @@ public class AnswerController
 {
     private final AnswerService answerService;
 
+    /**
+     * Gonderilen nesneyi database'e kaydeder.
+     * @param answer kaydedilecek olan nesne
+     * @return Answer'ı JSON formatında döndürür.
+     */
     @PostMapping(SAVE)
     public ResponseEntity<Answer> save(@RequestBody Answer answer){
         return ResponseEntity.ok(answerService.save(answer));

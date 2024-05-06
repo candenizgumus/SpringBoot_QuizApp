@@ -34,6 +34,12 @@ public class QuestionService extends ServiceManager<Question,Long>
         return questionRepository.findAllByQuiz_Id(id);
     }
 
+    /**
+     * QuestionId'si verilen soruyu databasede bulur ve döndürür. Soru yoksa hata fırlatır. Soru ile ilgili correctAnswer ve answer bilgilerini birleştirip
+     * DTO formatında döndürür.
+     * @param questionId aranan Question'ın id'si.
+     * @return QuestionFindAnswerOfQuestionDto JSON formatında döndürür.
+     */
     public QuestionFindAnswerOfQuestionDto findAnswerAndCorrectAnswerOfQuestion(Long questionId)
     {
         Question question = questionRepository.findById(questionId).orElseThrow(() -> new QuizAppException(ErrorType.QUESTION_NOT_FOUND));

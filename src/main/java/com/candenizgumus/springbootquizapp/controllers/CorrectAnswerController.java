@@ -20,6 +20,11 @@ public class CorrectAnswerController
 {
     private final CorrectAnswerService correctAnswerService;
 
+    /**
+     * Gonderilen nesneyi database'e kaydeder.
+     * @param correctAnswer kaydedilecek olan nesne
+     * @return correctAnswer'ı JSON formatında döndürür.
+     */
     @PostMapping(SAVE)
     public ResponseEntity<CorrectAnswer> save(@RequestBody CorrectAnswer correctAnswer){
         return ResponseEntity.ok(correctAnswerService.save(correctAnswer));

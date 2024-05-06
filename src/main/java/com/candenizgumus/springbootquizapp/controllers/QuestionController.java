@@ -18,11 +18,20 @@ public class QuestionController
 {
     private final QuestionService questionService;
 
+    /**
+     * Gonderilen nesneyi database'e kaydeder.
+     * @param question kaydedilecek olan nesne
+     * @return question'ı JSON formatında döndürür.
+     */
     @PostMapping(SAVE)
     public ResponseEntity<Question> save(@RequestBody Question question){
         return ResponseEntity.ok(questionService.save(question));
     }
 
+    /**
+     * Bütün soruları ve ilgili cevaplarını database'den DTO formatında döndürür..
+     * @return QuestionFindAnswerOfQuestionDto jSON formatında döndürür.
+     */
     @GetMapping(FINDANSWERANDCORRECTANSWEROFQUESTION)
     public ResponseEntity<QuestionFindAnswerOfQuestionDto> findAnswerAndCorrectAnswerOfQuestion(Long questionId){
         return ResponseEntity.ok(questionService.findAnswerAndCorrectAnswerOfQuestion(questionId));

@@ -20,12 +20,21 @@ public class QuizController
 {
     private final QuizService quizService;
 
+    /**
+     * Gonderilen nesneyi database'e kaydeder.
+     * @param quiz kaydedilecek olan nesne
+     * @return quiz'i JSON formatında döndürür.
+     */
     @PostMapping(SAVE)
     public ResponseEntity<Quiz> save(@RequestBody Quiz quiz){
         return ResponseEntity.ok(quizService.save(quiz));
     }
 
-    @GetMapping(FINDALL)
+    /**
+     * Bütün verileri database'den DTO formatında getirir..
+     * @return QuizFindAllDto jSON formatında döndürür.
+     */
+    @GetMapping(FINDALLDTO)
     public ResponseEntity<List<QuizFindAllDto>> findAllDto(){
         return ResponseEntity.ok(quizService.findAllDto());
     }

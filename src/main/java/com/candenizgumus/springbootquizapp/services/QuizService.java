@@ -25,6 +25,10 @@ public class QuizService extends ServiceManager<Quiz,Long>
         this.questionService = questionService;
     }
 
+    /**
+     * Database'den bütün quiz ve ilgili sorularını DTO formatında döndürür.
+     * @return List<QuizFindAllDto> listesini JSON formatında döndürür.
+     */
     public List<QuizFindAllDto> findAllDto() {
         List<Quiz> allQuizes = quizRepository.findAll();
         List<QuizFindAllDto> newQuizFindAllDtoList = new ArrayList<>();
