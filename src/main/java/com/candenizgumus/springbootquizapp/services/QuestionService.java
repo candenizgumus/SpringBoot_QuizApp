@@ -1,13 +1,17 @@
 package com.candenizgumus.springbootquizapp.services;
 
+import com.candenizgumus.springbootquizapp.dto.request.QuestionSaveDto;
+
 import com.candenizgumus.springbootquizapp.dto.response.QuestionFindAnswerOfQuestionDto;
 import com.candenizgumus.springbootquizapp.entities.Answer;
 import com.candenizgumus.springbootquizapp.entities.CorrectAnswer;
 import com.candenizgumus.springbootquizapp.entities.Question;
+import com.candenizgumus.springbootquizapp.entities.Quiz;
 import com.candenizgumus.springbootquizapp.exceptions.ErrorType;
 import com.candenizgumus.springbootquizapp.exceptions.QuizAppException;
-import com.candenizgumus.springbootquizapp.repositories.CorrectAnswerRepository;
+
 import com.candenizgumus.springbootquizapp.repositories.QuestionRepository;
+import com.candenizgumus.springbootquizapp.repositories.QuizRepository;
 import com.candenizgumus.springbootquizapp.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +22,17 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionService extends ServiceManager<Question,Long>
 {
+    //Bu katmanda başka sınıfların repositorylerini enjekte ettim çünkü service katmanını enjekte ettiğimde serviceler sonsuz döngüye giriyor.
     private final QuestionRepository questionRepository;
+    private final QuizRepository quizRepository;
     private final CorrectAnswerService correctAnswerService;
     private final AnswerService answerService;
 
-    public QuestionService(QuestionRepository questionRepository, CorrectAnswerService correctAnswerService, AnswerService answerService)
+    public QuestionService(QuestionRepository questionRepository, QuizRepository quizRepository, CorrectAnswerService correctAnswerService, AnswerService answerService)
     {
         super(questionRepository);
         this.questionRepository = questionRepository;
+        this.quizRepository = quizRepository;
         this.correctAnswerService = correctAnswerService;
         this.answerService = answerService;
     }
@@ -54,5 +61,22 @@ public class QuestionService extends ServiceManager<Question,Long>
 
         return finalList;
 
+    }
+
+    /**
+     * Gonderilen DTO nesnesi database'e kaydeder. Girilen questionId ile arama yapar ve database'de yoksa hata fırlatır.
+     * @param dto kaydedilecek olan dto nesnesi.
+     * @return Question'ı döndürür.
+     */
+    public Question saveDto(QuestionSaveDto dto)
+    {
+        Quiz quiz = quizRepository.findById(dto.quizId()).orElseThrow(() -> new QuizAppException(ErrorType.QUESTION_NOT_FOUND));
+
+        Question question = Question.builder()
+                .content(dto.content())
+                .quiz(quiz)
+                .build();
+
+        return questionRepository.save(question);
     }
 }

@@ -1,8 +1,11 @@
 package com.candenizgumus.springbootquizapp.controllers;
 
+import com.candenizgumus.springbootquizapp.dto.request.QuestionSaveDto;
+import com.candenizgumus.springbootquizapp.dto.request.QuizSaveDto;
 import com.candenizgumus.springbootquizapp.dto.response.QuestionFindAnswerOfQuestionDto;
 import com.candenizgumus.springbootquizapp.entities.CorrectAnswer;
 import com.candenizgumus.springbootquizapp.entities.Question;
+import com.candenizgumus.springbootquizapp.entities.Quiz;
 import com.candenizgumus.springbootquizapp.services.AnswerService;
 import com.candenizgumus.springbootquizapp.services.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,15 @@ public class QuestionController
     @PostMapping(SAVE)
     public ResponseEntity<Question> save(@RequestBody Question question){
         return ResponseEntity.ok(questionService.save(question));
+    }
+    /**
+     * Gonderilen DTO formatındaki verileri database'e kaydeder.
+     * @param dto kaydedilecek olan nesne.
+     * @return Question'ı JSON formatında döndürür.
+     */
+    @PostMapping(SAVEDTO)
+    public ResponseEntity<Question> saveDto(@RequestBody QuestionSaveDto dto){
+        return ResponseEntity.ok(questionService.saveDto(dto));
     }
 
     /**

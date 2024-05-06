@@ -1,8 +1,10 @@
 package com.candenizgumus.springbootquizapp.services;
 
+import com.candenizgumus.springbootquizapp.dto.request.QuizSaveDto;
 import com.candenizgumus.springbootquizapp.dto.response.QuizFindAllDto;
 import com.candenizgumus.springbootquizapp.entities.Question;
 import com.candenizgumus.springbootquizapp.entities.Quiz;
+import com.candenizgumus.springbootquizapp.mappers.QuizMapper;
 import com.candenizgumus.springbootquizapp.repositories.QuestionRepository;
 import com.candenizgumus.springbootquizapp.repositories.QuizRepository;
 import com.candenizgumus.springbootquizapp.utility.ServiceManager;
@@ -42,4 +44,14 @@ public class QuizService extends ServiceManager<Quiz,Long>
         return newQuizFindAllDtoList;
     }
 
+    /**
+     * Gonderilen DTO nesnesi database'e kaydeder.
+     * @param dto kaydedilecek olan dto nesnesi.
+     * @return Quiz'i döndürür.
+     */
+    public Quiz saveDto(QuizSaveDto dto)
+    {
+        Quiz quiz = QuizMapper.INSTANCE.quizSaveDtoToQuiz(dto);
+        return quizRepository.save(quiz);
+    }
 }

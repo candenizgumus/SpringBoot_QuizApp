@@ -1,5 +1,6 @@
 package com.candenizgumus.springbootquizapp.controllers;
 
+import com.candenizgumus.springbootquizapp.dto.request.QuizSaveDto;
 import com.candenizgumus.springbootquizapp.dto.response.QuizFindAllDto;
 import com.candenizgumus.springbootquizapp.entities.Question;
 import com.candenizgumus.springbootquizapp.entities.Quiz;
@@ -28,6 +29,16 @@ public class QuizController
     @PostMapping(SAVE)
     public ResponseEntity<Quiz> save(@RequestBody Quiz quiz){
         return ResponseEntity.ok(quizService.save(quiz));
+    }
+
+    /**
+     * Gonderilen DTO formatındaki verileri database'e kaydeder.
+     * @param dto kaydedilecek olan nesne.
+     * @return Quiz'i JSON formatında döndürür.
+     */
+    @PostMapping(SAVEDTO)
+    public ResponseEntity<Quiz> saveDto(@RequestBody QuizSaveDto dto){
+        return ResponseEntity.ok(quizService.saveDto(dto));
     }
 
     /**
